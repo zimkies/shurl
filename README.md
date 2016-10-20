@@ -13,6 +13,5 @@ bundle exec rails s
 
 ## Testing
 ```
-gem install rspec`
-rspec
+bundle exec rspec
 ```
