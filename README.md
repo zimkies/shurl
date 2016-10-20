@@ -15,3 +15,18 @@ bundle exec rails s
 ```
 bundle exec rspec
 ```
+
+
+## Todo
+- Setup active admim
+- Setup and test GET route
+- Configure CI
+- Don't allow creation of duplicate link
+- Discuss performance
+- Deploy to heroku
+- Discuss design decisions
+- Discuss things I would do to get it to production
+ - logging
+ - error managing
+ - Add counts (for times accessed)
+
