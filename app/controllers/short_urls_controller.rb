@@ -4,6 +4,7 @@ class ShortUrlsController < ApplicationController
   end
 
   def show
+    redirect_to ShortUrl.find_by_code!(params[:code]).url
   end
 
   protected

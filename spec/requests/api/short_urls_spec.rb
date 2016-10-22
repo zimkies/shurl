@@ -17,4 +17,14 @@ RSpec.describe "/api/short_urls", :type => :request do
       })
     end
   end
+
+  describe "GET /:code" do
+    let(:short_url) { create(:short_url) }
+    it "creates a short url and returns the shortened url" do
+      get "/#{short_url.code}"
+
+      expect(response.status).to eq 302
+      expect(response.location).to eq short_url.url
+    end
+  end
 end
