@@ -17,9 +17,7 @@ bundle exec rspec
 ```
 
 ## Todo
-- Setup and test GET route
 - Setup active admim
-- Don't allow creation of duplicate link
 - Discuss performance
 - Deploy to heroku
 - Discuss design decisions
