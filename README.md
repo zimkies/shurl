@@ -1,11 +1,23 @@
 # README
 A url shortening service written in Rails.
 
+### Admin site accessed here
+Accessed here: https://zimkies-shurl.herokuapp.com/admin
+
+### URL creation:
+```
+POST https://zimkies-shurl.herokuapp.com/api/short_urls
+{ url: 'http://long_url.com'}
+
+# -> { short_url: "https://zimkies-shurl.herokuapp.com/shortcode" }
+```
+
 ## Requirements
 ruby > 2.3.0
 
-## setup
+## Setup
 ```
+cp .env.example .env
 bundle install
 bundle exec rails db:setup
 bundle exec rails s
@@ -18,7 +30,7 @@ bundle exec rspec
 
 ## Design Decisions
 
-### Tools and Ovar-all design
+### Tools and Overall design
  - I used Rails because it's great for setting up a really fast project like this.
  - I used Rails Admin (with Basic Auth) because it is the fastest Admin system to set up. In a production environment, I'd probably switch to use devise for Digest Authentication so that multiple users can access the Admin interface more securely.
  - I don't allow creation of short urls for non-urls. Actually visiting the url to ensure it is valid is too slow, so I just used a REGEX expression to check.
@@ -26,7 +38,7 @@ bundle exec rspec
 ### Performance
 
 #### Storage Performance
- - We expect 5*100,000 urls to be generated each day. Urls average to about 80 characters long, so that's 80*10^5*80, which is around 1GB of data per month.
+ - We expect 5 x 100,000 urls to be generated each day. Urls average to about 80 characters long, so that's 80 x 10^5 x 80, which is around 1GB of data per month.
 
  Heroku has databases that that support up to 120GB of cache size, so we should be OK for storage for a few years. After that, we can start sharding our urls across multiple databases.
 
@@ -38,7 +50,7 @@ bundle exec rspec
  - Store the number of times a url is accessed.
  - Add better logging using papertrail
  - Add better error/exception management with Rollbar.
- - Add a splash page that uses our API
+ - Add a splash page that uses our API to allow users to generate short urls through our website.
  - Allow browser AJAX access to our api by adding the coors gem.
  - Add user accounts so that they can manage their own urls.
  - (See storage/speed performance sections for ideas on performance)
@@ -46,7 +58,3 @@ bundle exec rspec
 
 ## Todo
 - Configure CI
-- Discuss things I would do to get it to production
- - logging
- - error managing
- - Add counts (for times accessed)
