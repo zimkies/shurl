@@ -1,6 +1,11 @@
 class ShortUrlsController < ApplicationController
   def create
-    render json: ShortUrl.create(short_url_params)
+    short_url = ShortUrl.create(short_url_params)
+    if short_url.valid?
+      render json: short_url
+    else
+      render status: 422, plain: short_url.errors.full_messages.to_sentence
+    end
   end
 
   def show

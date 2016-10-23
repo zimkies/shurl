@@ -1,9 +1,12 @@
 class ShortUrl < ApplicationRecord
   CODE_LENGTH = 8
+  URL_REGEX = /\A#{URI::regexp}\z/
 
   delegate :url_helpers, to: 'Rails.application.routes'
   validates :code, presence: true
   validates :url, presence: true
+  validate :ensure_valid_url
+  validate :ensure_url_is_not_already_shortened
 
   after_initialize :assign_code
 
@@ -30,5 +33,21 @@ class ShortUrl < ApplicationRecord
     end
 
     self.code = code
+  end
+
+  def ensure_url_is_not_already_shortened
+    if self.url.present? && is_shortened_url?(url)
+      self.errors.add(:long_url, "#{url} is already a shurl url")
+    end
+  end
+
+  def is_shortened_url?(url)
+    URI(url).host == Shurl::Application.default_url_options[:host]
+  end
+
+  def ensure_valid_url
+    if self.url.present? && self.url !~ URL_REGEX
+      self.errors.add(:long_url, "#{url} is not a valid url")
+    end
   end
 end
