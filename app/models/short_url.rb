@@ -3,10 +3,10 @@ class ShortUrl < ApplicationRecord
   URL_REGEX = /\A#{URI::regexp}\z/
 
   delegate :url_helpers, to: 'Rails.application.routes'
-  validates :code, presence: true
+  validates :code, presence: true, uniqueness: true
   validates :url, presence: true
-  validate :ensure_valid_url
-  validate :ensure_url_is_not_already_shortened
+  validate :ensure_valid_url, on: :create
+  validate :ensure_url_is_not_already_shortened, on: :create
 
   after_initialize :assign_code
 
@@ -28,7 +28,7 @@ class ShortUrl < ApplicationRecord
 
     code = nil
     loop do
-      code = SecureRandom.urlsafe_base64(CODE_LENGTH)
+      code = SecureRandom.urlsafe_base64[0...CODE_LENGTH]
       break unless ShortUrl.where(code: code).exists?
     end
 

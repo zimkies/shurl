@@ -8,6 +8,15 @@ RSpec.describe ShortUrl, type: :model do
     end
   end
 
+  describe "code" do
+    let(:existing_short_url) { create(:short_url) }
+
+    it "doesn't allow creation of a duplicate short url" do
+      new_short_url = ShortUrl.new(url: 'http://google.com', code: existing_short_url.code)
+      expect(new_short_url.valid?).to eq false
+    end
+  end
+
   describe "long_url" do
     let(:short_url) { build(:short_url, url: long_url) }
     let(:long_url) { 'lkjl.com' }

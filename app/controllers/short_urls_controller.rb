@@ -1,4 +1,6 @@
 class ShortUrlsController < ApplicationController
+  protect_from_forgery except: :create
+
   def create
     short_url = ShortUrl.create(short_url_params)
     if short_url.valid?
