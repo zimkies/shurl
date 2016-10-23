@@ -17,11 +17,10 @@ bundle exec rspec
 ```
 
 ## Todo
-- Setup active admim
-- Discuss performance
 - Deploy to heroku
 - Discuss design decisions
 - Configure CI
+- Discuss performance
 - Discuss things I would do to get it to production
  - logging
  - error managing
